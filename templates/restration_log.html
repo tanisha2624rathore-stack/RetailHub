@@ -1,0 +1,682 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tanisha Company</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #333;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            width: 100%;
+            height: 70px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .login-btn,
+        .signup-btn {
+            padding: 10px 18px;
+            border-radius: 7px;
+        }
+
+        .login-btn {
+            border: 2px solid #667eea;
+            color: #667eea !important;
+        }
+
+        .signup-btn {
+            background: #667eea;
+            color: white !important;
+        }
+
+        .login-btn:hover {
+            background: #667eea;
+            color: white !important;
+        }
+
+        .signup-btn:hover {
+            background: #5568d9;
+        }
+
+
+        /* ================= HOME ================= */
+
+        .home {
+            min-height: 100vh;
+            padding-top: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .home-content h1 {
+            font-size: 55px;
+            margin-bottom: 20px;
+        }
+
+        .home-content p {
+            font-size: 20px;
+            max-width: 650px;
+            line-height: 1.6;
+        }
+
+        .home-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 14px 30px;
+            background: white;
+            color: #667eea;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+
+        /* ================= SECTIONS ================= */
+
+        section:not(.home) {
+            min-height: 70vh;
+            padding: 100px 7%;
+            text-align: center;
+        }
+
+        section h2 {
+            font-size: 35px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        section p {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .feature-box,
+        .service-box {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 280px;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+
+        /* ================= AUTH MODAL ================= */
+
+        .auth-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .auth-box {
+            width: 400px;
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .auth-box h2 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 25px;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #555;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .form-group input:focus {
+            border-color: #667eea;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            background: #667eea;
+            color: white;
+            border-radius: 7px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background: #5568d9;
+        }
+
+        .switch-form {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .switch-form span {
+            color: #667eea;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Login/Signup switching */
+
+        #signupForm {
+            display: none;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 768px) {
+
+            .navbar {
+                padding: 0 4%;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-links a {
+                font-size: 13px;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .home-content h1 {
+                font-size: 40px;
+            }
+
+            .auth-box {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <!-- ================= NAVIGATION BAR ================= -->
+
+    <nav class="navbar">
+
+        <a href="#home" class="logo">Tanisha</a>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="#features">Features</a>
+            </li>
+
+            <li>
+                <a href="#services">Services</a>
+            </li>
+
+            <li>
+                <a href="#contact">Contact</a>
+            </li>
+
+            <li>
+                <a href="#" class="login-btn" onclick="openLogin()">
+                    Login
+                </a>
+            </li>
+
+            <li>
+                <a href="#" class="signup-btn" onclick="openSignup()">
+                    Sign Up
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <!-- ================= HOME ================= -->
+
+    <section class="home" id="home">
+
+        <div class="home-content">
+
+            <h1>Welcome to Tanisha</h1>
+
+            <p>
+                We provide modern and reliable solutions
+                to help your business grow and succeed.
+            </p>
+
+            <a href="#services" class="home-btn">
+                Explore Services
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FEATURES ================= -->
+
+    <section id="features">
+
+        <h2>Our Features</h2>
+
+        <p>
+            Discover the powerful features provided by Tanisha.
+        </p>
+
+        <div class="feature-box">
+
+            <div class="card">
+                <h3>Easy to Use</h3>
+                <p>
+                    Simple and user-friendly solutions for everyone.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Secure</h3>
+                <p>
+                    Your information and data are kept secure.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Fast</h3>
+                <p>
+                    Fast and reliable services for your business.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= SERVICES ================= -->
+
+    <section id="services">
+
+        <h2>Our Services</h2>
+
+        <p>
+            We offer professional services designed for your needs.
+        </p>
+
+        <div class="service-box">
+
+            <div class="card">
+                <h3>Web Development</h3>
+                <p>
+                    Modern and responsive websites for businesses.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Digital Solutions</h3>
+                <p>
+                    Smart digital solutions to improve your business.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Support</h3>
+                <p>
+                    Professional support whenever you need it.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= CONTACT ================= -->
+
+    <section id="contact">
+
+        <h2>Contact Us</h2>
+
+        <p>
+            Email: info@tanisha.com
+        </p>
+
+        <p>
+            Phone: +91 98765 43210
+        </p>
+
+        <p>
+            We would love to hear from you.
+        </p>
+
+    </section>
+
+
+    <!-- ================= LOGIN / SIGNUP POPUP ================= -->
+
+    <div class="auth-container" id="authContainer">
+
+        <div class="auth-box">
+
+            <span class="close-btn" onclick="closeAuth()">
+                &times;
+            </span>
+
+
+            <!-- LOGIN -->
+
+            <form id="loginForm" method="POST" action="{% url 'login' %}">
+                   {% csrf_token %}
+
+                <h2>Login</h2>
+
+                <div class="form-group">
+
+                    <label>Email</label>
+
+                    <input
+                        type="email"
+                        placeholder="Enter your email"
+                        name="email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Password</label>
+
+                    <input
+                        type="password"
+                        placeholder="Enter your password"
+                        name="password"
+                        required
+                    >
+
+                </div>
+
+
+                <button type="submit" class="submit-btn">
+                    Login
+                </button>
+
+
+                <div class="switch-form">
+
+                    Don't have an account?
+
+                    <span onclick="openSignup()">
+                        Sign Up
+                    </span>
+
+                </div>
+
+            </form>
+
+
+            <!-- SIGN UP -->
+
+            <form id="signupForm" method="POST" action="{% url 'sign_up' %}">
+                {% csrf_token %}
+
+                <h2>Create Account</h2>
+
+                <div class="form-group">
+
+                    <label>Full Name</label>
+
+                    <input
+                        type="text"
+                        placeholder="Enter your name"
+                        name="user_name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Email</label>
+
+                    <input
+                        type="email"
+                        placeholder="Enter your email"
+                        name="email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Password</label>
+
+                    <input
+                        type="password"
+                        placeholder="Create password"
+                        name="password"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Confirm Password</label>
+
+                    <input
+                        type="password"
+                        placeholder="Confirm password"
+                        name="confirm_password"
+                        required
+                    >
+
+                </div>
+
+
+                <button type="submit" class="submit-btn">
+                    Sign Up
+                </button>
+
+
+                <div class="switch-form">
+
+                    Already have an account?
+
+                    <span onclick="openLogin()">
+                        Login
+                    </span>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+
+        const authContainer =
+            document.getElementById("authContainer");
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const signupForm =
+            document.getElementById("signupForm");
+
+
+        // Open Login
+
+        function openLogin() {
+
+            authContainer.style.display = "flex";
+
+            loginForm.style.display = "block";
+
+            signupForm.style.display = "none";
+
+        }
+
+
+        // Open Signup
+
+        function openSignup() {
+
+            authContainer.style.display = "flex";
+
+            loginForm.style.display = "none";
+
+            signupForm.style.display = "block";
+
+        }
+
+
+        // Close Login/Signup
+
+        function closeAuth() {
+
+            authContainer.style.display = "none";
+
+        }
+
+
+        // Close popup when clicking outside
+
+        authContainer.addEventListener("click", function(event) {
+
+            if (event.target === authContainer) {
+
+                closeAuth();
+
+            }
+
+        });
+    
+   
+  
+    
+        
+
+
+        
+
+       
+
+    </script>
+
+</body>
+</html>
+
