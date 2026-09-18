@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Purchase | RetailHub</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+        }
+
+        .container {
+            width: 500px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        input {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .total {
+            background-color: #f0f8ff;
+            font-weight: bold;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Purchase Entry</h2>
+    
+     {% if data.id %}
+    <form method="POST" action="{% url 'update_purchase' data.id %}">
+     {% else %}   
+    <form method="POST" action="{% url 'purchase' %}">
+     {%endif%}   
+
+        {% csrf_token %}
+        
+       
+        <div class="form-group">
+            <label for="company_name">Company Name</label>
+            
+            <input
+                type="text"
+                id="company_name"
+                name="company_name"
+                placeholder="Enter company name"
+                value="{{data.company_name}}"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="product_name">Product Name</label>
+            <input
+                type="text"
+                id="product_name"
+                name="product_name"
+                placeholder="Enter product name"
+                value="{{data.product_name}}"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input
+                type="number"
+                id="price"
+                name="price"
+                placeholder="Enter price"
+                step="0.01"
+                min="0"
+                required
+                value="{{data.price}}"
+                oninput="calculateTotal()"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="qty">Quantity</label>
+            <input
+                type="number"
+                id="qty"
+                name="qty"
+                placeholder="Enter quantity"
+                min="1"
+                required
+                value="{{data.qty}}"
+                oninput="calculateTotal()"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="total_price">Total Price</label>
+            <input
+                type="number"
+                id="total_price"
+                name="total_price"
+                class="total"
+                value="{{data.total_price}}"
+                readonly
+            >
+        </div>
+       
+
+        <button type="submit">Save Purchase</button>
+
+    </form>
+
+</div>
+
+<script>
+    function calculateTotal() {
+        const price = parseFloat(document.getElementById("price").value) || 0;
+        const qty = parseInt(document.getElementById("qty").value) || 0;
+
+        const total = price * qty;
+
+        document.getElementById("total_price").value = total.toFixed(2);
+    }
+</script>
+
+</body>
+</html>
